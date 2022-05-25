@@ -1,0 +1,12 @@
+.add-user-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 5px;
+}

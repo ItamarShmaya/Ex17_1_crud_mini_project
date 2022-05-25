@@ -1,0 +1,14 @@
+.user {
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr 3fr 2fr 2fr;
+  grid-gap: 5px;
+  font-size: 1.5rem;
+}
+
+.avatar {
+  width: 30px;
+}
+
+.avatar img {
+  width: 100%;
+}

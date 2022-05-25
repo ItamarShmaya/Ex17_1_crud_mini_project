@@ -1,0 +1,12 @@
+.user-list {
+  display: grid;
+  grid-gap: 5px;
+  padding: 1rem;
+  grid-auto-rows: 30px;
+}
+
+.list-header {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

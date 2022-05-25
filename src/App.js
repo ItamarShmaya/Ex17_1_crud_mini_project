@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import mockapi from "./api/mockapi.js";
+import UserList from "./components/users/components/UserList/UserList.jsx";
+import AddUserForm from "./components/users/components/AddUser/AddUserForm.jsx";
+import "./index.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  state = { users: [], nextUserId: null, userAdded: true };
+
+  componentDidMount = () => {
+    this.getUsersData();
+  };
+
+  getUsersData = async () => {
+    const response = await mockapi.get("/users");
+    const nextUserId = response.data[response.data.length - 1].id + 1;
+    this.setState({
+      users: response.data,
+      nextUserId,
+    });
+  };
+
+  onFormSubmit = async (user) => {
+    this.setState({ userAdded: false });
+    user.id = this.state.nextUserId;
+    this.addUserToDataBase(user);
+  };
+
+  addUserToDataBase = async (user) => {
+    await mockapi.post("/users", user);
+    await this.getUsersData();
+    this.setState({ userAdded: true });
+  };
+
+  render() {
+    return (
+      <>
+        <AddUserForm
+          onFormSubmit={this.onFormSubmit}
+          userAdded={this.state.userAdded}
+        />
+        <UserList
+          usersData={this.state.users}
+          getUsersData={this.getUsersData}
+        />
+      </>
+    );
+  }
 }
-
-export default App;
